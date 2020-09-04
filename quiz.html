@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/7deffc4dbb.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!---->
+
+    <title>Choose your class</title>
+</head>
+
+<body onload="loadQuiz();">
+    <div class="container">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <form id="quiz">
+
+
+                </form>
+                <button type="button" class="btn btn-primary" id="submit" data-toggle="modal"
+                    data-target="#exampleModal">Submit</button>
+
+
+
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="res" style="color: black!important;">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        var counter = {
+            "Mage": 0,
+            "Warrior": 0,
+            "Tank": 0,
+            "Shaman": 0,
+            "Paladin": 0,
+            "Healer": 0,
+            "Berserker": 0,
+            "Rogue": 0,
+            "Hunter": 0
+        };
+
+
+        var questions = {
+            "Q1": ["You are assigned a group project due in one hour. Do you", "Get to know your teammates?", "Worry about how much time you have left?"],
+
+            "Q2": ["You join a group dedicated to stopping global warming. Do you…", "Volunteer to pick up trash at the beach?", "Tell others the ways to stop climate change?"],
+
+            "Q3": ["Volunteer to pick up trash at the beach?", "Tell a story so your audience better understands your ideas?", "Share statistics to back up your reasoning?"],
+
+            "Q4": ["A friend keeps making the same bad decisions. Do you…", "Hear them out and let them know you are there for them?", "Give honest, critical feedback?"],
+
+            "Q5": ["You have a team project due in one hour. Do you…", "Take time to make sure everyone is on the same page?", "Focus on getting it done on time?"],
+
+            "Q6": ["You win the lottery but must spend the money within 24 hours. Do you…", "Get caught up imagining all the possibilities?", "Immediately start hashing out a plan?"],
+
+            "Q7": ["You are listening to a lecture. Do you…", "Take an easygoing approach and listen?", "Hope they get to the point as soon as possible?"],
+
+            "Q8": ["You run in to a problem. Do you…", "Turn to friends and ask their opinion?", "Solve it yourself?"],
+
+            "Q9": ["There is a locked door in front of you. Do you…", "Go look for other ways in?", "Find a way through that door?"],
+
+            "Q10": ["You are forced to “take one for the team.” Do you…", "Get frustrated?", "Adapt and get it done?"],
+
+            "Q11": ["Your friend is angrily arguing that you are wrong. Do you…", "Listen to see if their argument has any merit?", "Circle back with them later when they have calmed down?"],
+
+            "Q12": ["Someone disagrees with you and points out why you’re wrong. Do you…", "Go and gather some more information?", "Stand by what you said?"],
+
+            "Q13": ["You are given a list of tasks to complete. Do you…", "Scan the list and look for potential issues?", "Focus on completing the first task?"],
+
+            "Q14": ["You are part of a public debate. Do you…", "Listen to how others see things?", "Influence others to see your way?"],
+
+            "Q15": ["You are invited to a party and asked to bring some food. Do you…", "Ask others what they are bringing so there are no duplicates?", "Just bring something you like to eat?"],
+
+            "Q16": ["You need to get from Point A to Point B, but have been given pretty poor ", "Try organizing the information to get a better idea of where you’re going?", "Form a plan with what you have and get going?"],
+
+            "Q17": ["You are given $100 to invest in stocks. Do you…", "Start researching popular stocks?", "Buy stock in a company you recently keep hearing about?"],
+
+            "Q18": ["You are starting a business. Do you…", "Work on a business plan and make sure everything is solid?", "Just start?"],
+
+            "Q19": ["Your manager tells you to do a better job. Do you…", "Explain why they are mistaken?", "Get back to it and try again?"],
+
+            "Q20": ["Question 20: Your garbage disposal breaks. Do you…", "Call a professional?", "Try fixing it yourself?"]
+        };
+        var answers = {
+            "Q1": ["Hunter", "Shaman"],
+
+            "Q2": ["Hunter", "Healer"],
+
+            "Q3": ["Hunter", "Paladin"],
+
+            "Q4": ["Hunter", "Tank"],
+
+            "Q5": ["Hunter", "Berserker"],
+
+            "Q6": ["Mage", "Healer"],
+
+            "Q7": ["Mage", "Paladin"],
+
+            "Q8": ["Mage", "Tank"],
+
+            "Q9": ["Mage", "Berserker"],
+
+            "Q10": ["Mage", "Warrior"],
+
+            "Q11": ["Shaman", "Paladin"],
+
+            "Q12": ["Shaman", "Tank"],
+
+            "Q13": ["Shaman", "Berserker"],
+
+            "Q14": ["Shaman", "Warrior"],
+
+            "Q15": ["Healer", "Tank"],
+
+            "Q16": ["Healer", "Berserker"],
+
+            "Q17": ["Healer", "Warrior"],
+
+            "Q18": ["Paladin", "Berserker"],
+
+            "Q19": ["Paladin", "Warrior"],
+
+            "Q20": ["Tank", "Warrior"],
+
+
+
+        }
+
+        function loadQuiz() {
+            for (var key in questions) {
+                document.getElementById("quiz").innerHTML +=
+                    '<div class="card">' +
+                    '<div class="card-header" >' +
+                    `${questions[key][0]}` +
+                    '</div >' +
+                    '<div class="card-body">' +
+                    '<div class="custom-control custom-radio custom-control-block">' +
+                    `<input type="radio" class="custom-control-input" name="${key}" id="${key}A" value="0">` +
+                    `<label class="custom-control-label" for="${key}A">${questions[key][1]}</label>` +
+                    '</div>' +
+                    '<div class="custom-control custom-radio custom-control-block">' +
+                    `<input type="radio" class="custom-control-input" name="${key}" id="${key}B" value="1">` +
+                    `<label class="custom-control-label" for="${key}B">${questions[key][2]}</label>` +
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
+            }
+        }
+
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                x = $("form").serializeArray();
+                resetCounter();
+                r = calculateResults(x);
+                document.getElementById("res").innerHTML = `${r}`;
+
+            });
+        });
+
+        function calculateResults(score) {
+            score.forEach(element => counter[answers[element.name][element.value]] += 5);
+            console.log(counter["Warrior"]);
+            return findHighest();
+
+        }
+
+        function findHighest(){
+            var maxVal = 0;
+            var maxKey;
+            for (var key in counter) {
+            if (counter.hasOwnProperty(key)) {
+                if (counter[key] > maxVal){
+                    maxVal = counter[key];
+                    maxKey = key;
+                }
+            }
+            console.log(key, counter[key]);
+        }
+     
+        }
+  
+
+        function resetCounter() {
+            counter = {
+                "Mage": 0,
+                "Warrior": 0,
+                "Tank": 0,
+                "Shaman": 0,
+                "Paladin": 0,
+                "Healer": 0,
+                "Berserker": 0,
+                "Rogue": 0,
+                "Hunter": 0
+            };
+        }
+
+
+
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
